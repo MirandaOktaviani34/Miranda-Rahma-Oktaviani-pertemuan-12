@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penentuan Kelulusan Mahasiswa Universitas Pamulang</title>
+
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid white;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .hasil {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .lulus {
+      background: #ececec;
+      color: #155724;
+    }
+
+    .tidak {
+      background: white;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box-container">
+    <h1>Selamat Datang di Perhitungan Kelulusan Mahasiswa Universitas Pamulang</h1>
+    <h2>Penentuan Kelulusan Mahasiswa</h2>
+
+    <label>Nama Mahasiswa</label>
+    <input type="text" id="nama" placeholder="Masukkan nama">
+
+    <label>kelas</label>
+    <input type="class" id="uts" placeholder="05TPLE001 - 05TPLE020">
+
+    <label>Nilai Tugas</label>
+    <input type="number" id="tugas" placeholder="0 - 100">
+
+    <label>Nilai UTS</label>
+    <input type="number" id="uts" placeholder="0 - 100">
+
+    <label>Nilai UAS</label>
+    <input type="number" id="uas" placeholder="0 - 100">
+
+    <button onclick="cekKelulusan()">Cek Kelulusan</button>
+
+    <div id="hasil"></div>
+  </div>
+
+  <script>
+    function cekKelulusan() {
+      let nama = document.getElementById("nama").value;
+      let tugas = parseFloat(document.getElementById("tugas").value);
+      let uts = parseFloat(document.getElementById("uts").value);
+      let uas = parseFloat(document.getElementById("uas").value);
+
+      // Rumus nilai akhir
+      let nilaiAkhir = (tugas * 0.2) + (uts * 0.4) + (uas * 0.4);
+
+      let status = "";
+      let kelas = "";
+
+      // Operator perbandingan dan logika
+      if (nilaiAkhir >= 70-100) {
+        status = "LULUS";
+        kelas = "lulus";
+      } else {
+        status = "TIDAK LULUS";
+        kelas = "tidak";
+      }
+
+      document.getElementById("hasil").innerHTML = `
+        <div class="${kelas} hasil">
+          Nama : ${nama} <br>
+          Nilai Akhir : ${nilaiAkhir.toFixed(2)} <br>
+          Status : ${status}
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
