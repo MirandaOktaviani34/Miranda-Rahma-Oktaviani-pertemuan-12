@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f0f0f0;
+display:flex;
+justify-content:center;
+padding-top:40px;
+}
+
+.container{
+background:white;
+padding:25px;
+width:350px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h2{
+text-align:center;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:5px 0;
+font-size:18px;
+}
+
+button{
+padding:10px;
+margin:3px;
+width:70px;
+cursor:pointer;
+font-size:16px;
+}
+
+.hasil{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+}
+
+.history{
+margin-top:15px;
+background:#eee;
+padding:10px;
+height:120px;
+overflow:auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Kalkulator</h2>
+
+<input type="number" id="angka1" placeholder="Masukkan angka pertama">
+
+<input type="number" id="angka2" placeholder="Masukkan angka kedua">
+
+<div>
+
+<button onclick="hitung('+')">+</button>
+
+<button onclick="hitung('-')">-</button>
+
+<button onclick="hitung('*')">*</button>
+
+<button onclick="hitung('/')">/</button>
+
+</div>
+
+<div>
+
+<button onclick="pangkat()">x²</button>
+
+<button onclick="akar()">√</button>
+
+<button onclick="persen()">%</button>
+
+<button onclick="faktorial()">n!</button>
+
+</div>
+
+<div class="hasil">
+
+Hasil :
+<span id="output">0</span>
+
+</div>
+
+<div class="history">
+
+<b>Riwayat :</b>
+
+<ul id="riwayat"></ul>
+
+</div>
+
+</div>
+
+<script>
+
+function tampilkan(hasil, teks){
+
+document.getElementById("output").innerHTML=hasil;
+
+let li=document.createElement("li");
+
+li.innerHTML=teks+" = "+hasil;
+
+document.getElementById("riwayat").appendChild(li);
+
+}
+
+function hitung(operator){
+
+let a=parseFloat(document.getElementById("angka1").value);
+
+let b=parseFloat(document.getElementById("angka2").value);
+
+if(isNaN(a)||isNaN(b)){
+
+alert("Input belum lengkap");
+
+return;
+
+}
+
+let hasil;
+
+switch(operator){
+
+case '+':
+hasil=a+b;
+break;
+
+case '-':
+hasil=a-b;
+break;
+
+case '*':
+hasil=a*b;
+break;
+
+case '/':
+
+if(b==0){
+
+alert("Tidak bisa dibagi 0");
+
+return;
+
+}
+
+hasil=a/b;
+break;
+
+}
+
+tampilkan(hasil,a+" "+operator+" "+b);
+
+}
+
+function pangkat(){
+
+let a=parseFloat(document.getElementById("angka1").value);
+
+let hasil=Math.pow(a,2);
+
+tampilkan(hasil,a+"²");
+
+}
+
+function akar(){
+
+let a=parseFloat(document.getElementById("angka1").value);
+
+let hasil=Math.sqrt(a);
+
+tampilkan(hasil,"√"+a);
+
+}
+
+function persen(){
+
+let a=parseFloat(document.getElementById("angka1").value);
+
+let b=parseFloat(document.getElementById("angka2").value);
+
+let hasil=(a*b)/100;
+
+tampilkan(hasil,a+"% dari "+b);
+
+}
+
+function faktorial(){
+
+let a=parseInt(document.getElementById("angka1").value);
+
+if(a<0){
+
+alert("Tidak boleh negatif");
+
+return;
+
+}
+
+let hasil=1;
+
+for(let i=1;i<=a;i++){
+
+hasil*=i;
+
+}
+
+tampilkan(hasil,a+"!");
+
+}
+
+</script>
+
+</body>
+</html>
