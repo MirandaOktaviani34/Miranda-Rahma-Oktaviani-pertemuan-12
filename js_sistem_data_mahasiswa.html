@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistem Mahasiswa Universitas Pelita Bangsa</title>
+<style>
+/* --- CSS LOGIN --- */
+body{
+    font-family: Arial, sans-serif;
+    margin:0;
+    padding:30px;
+}
+
+#login-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, cadetblue, white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-header {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    line-height: 1.3;
+}
+
+.login-box {
+    background: linear-gradient(135deg, cadetblue, white); ;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    width: 300px;
+    text-align: center;
+}
+
+.login-box h2 { margin-bottom: 10px; color: #333; }
+.login-box p { margin-bottom: 20px; color: #666; font-size: 14px; }
+
+.form-group-login { margin-bottom: 15px; text-align: left; }
+.form-group-login label { display: block; font-weight: bold; margin-bottom: 5px; }
+.form-group-login input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.btn-login:hover { background: #5568d3; }
+
+.switch-text { font-size: 14px; text-align: center; }
+.switch-text a { color: #667eea; cursor: pointer; text-decoration: underline; }
+
+.copyright {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+}
+
+.hidden { display: none; }
+
+/* --- CSS DATA MAHASISWA --- */
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, cadetblue, white);
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    width:80%;
+    margin:auto;
+    background: linear-gradient(135deg, cadetblue, white);
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+h1,h2{
+    margin-bottom:20px;
+}
+
+.form-group{
+    margin-bottom:15px;
+    display:flex;
+    align-items:center;
+}
+
+.form-group label{
+    width:100px;
+}
+
+.form-group input,
+.form-group select{
+    width:200px;
+    padding:8px;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    margin-right:10px;
+}
+
+.btn-add{
+    background:green;
+    color:white;
+}
+
+.btn-update{
+    background:orange;
+    color:white;
+}
+
+.btn-edit{
+    background:blue;
+    color:white;
+}
+
+.btn-delete{
+    background:red;
+    color:white;
+}
+
+.btn-logout{
+    background:#333;
+    color:white;
+    float:right;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+table,th,td{
+    border:1px solid #ccc;
+}
+
+th,td{
+    padding:10px;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN PAGE ================= -->
+<div id="login-page">
+    
+    <div class="login-header">
+        <img src="gambarUPB.png" class="logo-icon" alt="Logo">
+        <div class="logo-text">UNIVERSITAS<br>PELITA BANGSA</div>
+    </div>
+
+    <div class="login-box">
+        <h2 id="form-title">LOGIN</h2>
+        <p id="form-subtitle">Silakan masuk ke akun Anda</p>
+        
+        <form id="loginForm">
+            <div class="form-group-login">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Masukkan username" required>
+            </div>
+            <div class="form-group-login">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+            <button type="submit" class="btn-login">Masuk</button>
+                <p>Belum punya akun? <a onclick="showRegister()">Register</a></p>
+        </form>
+        <form id="registerForm" class="hidden">
+            <div class="form-group-login">
+                <label>Username</label>
+                <input type="text" id="regUsername" placeholder="Buat username" required>
+            </div>
+            <div class="form-group-login">
+                <label>Password</label>
+                <input type="password" id="regPassword" placeholder="Buat password" required>
+            </div>
+            <div class="form-group-login">
+                <label>Konfirmasi Password</label>
+                <input type="password" id="regConfirmPassword" placeholder="Konfirmasi password" required>
+            </div>
+            <button type="submit" class="btn-login">Daftar</button>
+            <div class="switch-text">
+                <p>Sudah punya akun? <a onclick="showLogin()">Login</a></p>
+            </div>
+        </form>
+        </script>
+
+        <div class="copyright">
+            Copyright &copy; 2026 IT Support Universitas Pelita Bangsa
+        </div>
+    </div>
+</div>
+<!-- ================= DATA MAHASISWA ================= -->
+<div id="data-page" class="container hidden">
+
+<button class="btn-logout" onclick="logout()">
+Logout
+</button>
+
+<br><br>
+
+<h1>Selamat Datang di Universitas Pelita Bangsa</h1>
+
+<h1>Data Mahasiswa</h1>
+
+<div class="form-group">
+<label>NIM</label>
+<input type="text" id="nim">
+</div>
+
+<div class="form-group">
+<label>Nama</label>
+<input type="text" id="nama">
+</div>
+
+<div class="form-group">
+<label>Jurusan</label>
+
+<select id="jurusan">
+
+     <option value="">Pilih Jurusan</option>
+       <option>TEKNIK INFORMATIKA</option>
+         <option>SISTEM INFORMASI</option>
+           <option>MANAJEMEN</option>
+             <option>AKUNTANSI</option>
+               <option>PGSD</option>
+                 <option>TEKNIK ELEKTRO</option>
+                   <option>TEKNIK INDUSTRI</option>
+                     <option>TEKNIK PERTAMBANGAN</option>
+                       <option>HUKUM</option>
+                         <option>KEDOKTERAN GIGI</option>
+                           <option>KEBIDANAN</option>
+                             <option>KEPERAWATAN</option>
+                               <option>PENDIDIKAN DOKTER</option>
+                                 <option>PENDIDIKAN DOKTER SPESIALIS</option>
+                                   <option>ILMU GIZI</option>
+</select>
+</div>
+
+<div class="form-group">
+
+   <label>Fakultas</label>
+
+   <select id="fakultas">
+
+   <option value="">Pilih Fakultas</option>
+     <option>ILMU KOMPUTER</option>
+       <option>EKONOMI</option>
+         <option>TEKNIK</option>
+           <option>HUKUM</option>
+             <option>ILMU EKONOMI & BISNIS</option>
+               <option>KEDOKTERAN</option>
+                 <option>ILMU KESEHATAN MASYARAKAT</option>
+</select>
+
+</div>
+
+     <button class="btn-add" onclick="tambahData()">
+      Tambah Mahasiswa
+    </button>
+
+      <button class="btn-update" onclick="updateData()">
+Update Data Mahasiswa
+     </button>
+
+    <h2>Daftar Mahasiswa</h2>
+
+     <table>
+
+     <thead>
+
+       <tr>
+
+         <th>NIM</th>
+          <th>Nama</th>
+           <th>Jurusan</th>
+             <th>Fakultas</th>
+              <th>Aksi</th>
+         </tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+/* --- JAVASCRIPT LOGIN --- */
+function showRegister() {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.remove('hidden');
+    document.getElementById('form-title').innerText = "REGISTER";
+    document.getElementById('form-subtitle').innerText = "Buat akun baru Anda";
+}
+
+function showLogin() {
+    document.getElementById('registerForm').classList.add('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('form-title').innerText = "LOGIN";
+    document.getElementById('form-subtitle').innerText = "Silakan masuk ke akun Anda";
+}
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var user = document.getElementById('username').value;
+    if(user) {
+        document.getElementById('login-page').style.display = 'none';
+        document.getElementById('data-page').classList.remove('hidden');
+    }
+});
+
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var pass = document.getElementById('regPassword').value;
+    var confirm = document.getElementById('regConfirmPassword').value;
+    
+    if(pass !== confirm) {
+        alert("Password tidak cocok!");
+        return;
+    }
+    alert("Akun berhasil dibuat! Silakan Login.");
+    showLogin();
+});
+
+function logout() {
+    document.getElementById('login-page').style.display = 'flex';
+    document.getElementById('data-page').classList.add('hidden');
+    document.getElementById('username').value = "";
+    document.getElementById('password').value = "";
+}
+
+/* --- JAVASCRIPT DATA MAHASISWA DENGAN LOCAL STORAGE --- */
+let editIndex = -1;
+let mahasiswa=[];
+
+window.onload = function() {
+    let dataTersimpan = localStorage.getItem('dataMahasiswa');
+    if(dataTersimpan) {
+        mahasiswa = JSON.parse(dataTersimpan);
+        tampilkanData();
+    }
+};
+
+function simpanKeLocalStorage() {
+    localStorage.setItem('dataMahasiswa', JSON.stringify(mahasiswa));
+}
+
+function tambahData(){
+
+let nim=document.getElementById("nim").value;
+let nama=document.getElementById("nama").value;
+let jurisdiction=document.getElementById("jurusan").value;
+let fakultas=document.getElementById("fakultas").value;
+
+if(nim=="" || nama=="" || jurisdiction=="" || fakultas==""){
+alert("Isi semua data");
+return;
+}
+
+let data={
+nim,
+nama,
+jurusan:jurisdiction,
+fakultas
+};
+
+mahasiswa.push(data);
+simpanKeLocalStorage();
+tampilkanData();
+resetForm();
+
+}
+
+
+function tampilkanData(){
+
+let table=document.getElementById("tableBody");
+
+table.innerHTML="";
+
+mahasiswa.forEach((mhs,index)=>{
+
+table.innerHTML += `
+<tr>
+<td>${mhs.nim}</td>
+<td>${mhs.nama}</td>
+<td>${mhs.jurusan}</td>
+<td>${mhs.fakultas}</td>
+<td>
+<button class="btn-edit" onclick="editData(${index})">Edit</button>
+<button class="btn-delete" onclick="hapusData(${index})">Delete</button>
+</td>
+</tr>
+`;
+
+});
+
+}
+
+function editData(index){
+
+editIndex=index;
+document.getElementById("nim").value = mahasiswa[index].nim;
+document.getElementById("nama").value = mahasiswa[index].nama;
+document.getElementById("jurusan").value = mahasiswa[index].jurusan;
+document.getElementById("fakultas").value = mahasiswa[index].fakultas;
+
+}
+
+function updateData(){
+
+if(editIndex==-1){
+alert("Pilih data yang ingin diedit");
+return;
+}
+
+mahasiswa[editIndex]={
+nim: document.getElementById("nim").value,
+nama: document.getElementById("nama").value,
+jurusan: document.getElementById("jurusan").value,
+fakultas: document.getElementById("fakultas").value
+};
+
+simpanKeLocalStorage();
+tampilkanData();
+resetForm();
+editIndex=-1;
+
+}
+
+function hapusData(index){
+
+if(confirm("Hapus data?")){
+mahasiswa.splice(index,1);
+simpanKeLocalStorage();
+tampilkanData();
+}
+
+}
+
+function resetForm(){
+
+document.getElementById("nim").value="";
+document.getElementById("nama").value="";
+document.getElementById("jurusan").value="";
+document.getElementById("fakultas").value="";
+
+}
+</script>
+    <div class="copyright">
+     Copyright &copy; 2026 IT Support Universitas Pelita Bangsa
+  </div>
+    </div>
+     </div>
+</body>
+</html>
